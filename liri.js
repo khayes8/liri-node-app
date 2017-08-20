@@ -7,29 +7,45 @@ var spotify = new spotifyPackage({
 });
 var fs = require("fs");
 var inquirer = require("inquirer");
-//-------------------------------------
-inquirer.prompt([
-    {
-      name: 'song',
-      message: 'What song would you like to hear?'
+var command = process.argv[2];
 
-    }
-  ]).then(function(answers){
-spotify.search({ type: 'track', query: answers.song, limit: 1 }, function(err, data) {
-  if (err) {
-    return console.log('Error occurred: ' + err);
-  }
-  var albumInfo = data.tracks.items[0].album; 
-  console.log(albumInfo);
-  });
-//-------------------------------------
-  //spotify schtuff
 
- 
+function commandResponse() {
+    if (command === "spotify-this-song")
+        inquirer.prompt([{
+            name: 'song',
+            message: 'Type in the name of a song.'
 
-// console.log(albumInfo);
-});
-//-------------------------------------
+        }]).then(function(answers) {
+            spotify.search({
+                type: 'track',
+                query: answers.song,
+                limit: 1
+            }, function(err, data) {
+                if (err) {
+                    return console.log('Error occurred: ' + err);
+                }
+                var albumInfo = data.tracks.items[0].album;
+                console.log(albumInfo);
+            });
+        });
+}
+
+commandResponse();
+
+
+// -------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 
 
 
