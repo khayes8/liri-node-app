@@ -1,3 +1,4 @@
+//Set your global variables.
 var twitterPackage = require('twitter');
 // var keysFile = require('./keys.js');
 var spotifyPackage = require('node-spotify-api');
@@ -15,7 +16,7 @@ var fs = require("fs");
 var inquirer = require("inquirer");
 var command = process.argv[2];
 
-
+//use those variables within a function to call to the twitter and spotify APIs when a command is inputted int command line
 function commandResponse() {
     if (command === "spotify-this-song")
         inquirer.prompt([{
@@ -37,7 +38,7 @@ function commandResponse() {
             var song = data.tracks.items[0].name;
             var preview = data.tracks.items[0].album.artists[0].href;
             var album = data.tracks.items[0].album.name;
-            
+
             console.log("                   ")
             console.log("Artist: " + artist)
             console.log("Album: " + album);
@@ -47,24 +48,25 @@ function commandResponse() {
 
         });
     });
-    // if (command === "my-tweets") {
+    if (command === "my-tweets") {
 
-    //     var params = {
-    //         screen_name: 'khayes1993'
-    //     };
-    //     client.get('statuses/user_timeline', params, function(error, tweets, response) {
-    //         if (!error) {
-    //             console.log(tweets.text);
-    // //         }
-    // //     });
+        var params = {
+            screen_name: 'khayes1993'
+        };
+        client.get('statuses/user_timeline', params, function(error, tweets, response) {
+            if (!error) {
+                console.log(tweets);
+            }
+        });
 
-    // }
+    }
+
+    //twitter command works but was unable to narrow it down to just the text property when console.logging tweets object
 }
 
+//call your function
 commandResponse();
 
-
-// -------------------------------------
 
 
 
